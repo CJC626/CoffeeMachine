@@ -2,6 +2,7 @@
 background-color: #f99954;
 color:  white;
 height: 60vh;
+width: 60vw;
 margin-top: 20vh;
 font-family: 'Arial';
 }
@@ -12,4 +13,13 @@ font-family: 'Arial';
 
 .sp{
 	padding-right: 10px;
+}
+
+.subt{
+	font-weight: bold;
+	color: brown;
+}
+
+button{
+	margin-top: 1.5em;
 }

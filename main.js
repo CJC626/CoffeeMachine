@@ -1,6 +1,7 @@
 let app = new Vue({
 	el: "#app",
 	data: {
+		status: false,
 		coffee: {
 			type: "",
 			size: "",
@@ -55,10 +56,32 @@ let app = new Vue({
 			console.log("precio extras: " + priceExtras);
 			let final = (priceCoffee + priceExtras).toFixed(2);
 
-			return `<b>Price:</b> ${final}<br>
-			<b>Detail:</b><br>
-			Coffee: ${priceCoffee.toFixed(2)}<br>
-			Extras: ${priceExtras.toFixed(2)}`;
+
+			//ECMA6 template literals not working here. Used v-HTML to embed the result.
+			return `<p><span class="subt">Price:</span> ${final}€</p>
+			<p><span class="subt">Detail:</span></p>
+	  	<p><span class="subt">Coffee:</span> ${priceCoffee.toFixed(2)}€</p>
+	  	<p><span class="subt">Extras:</span> ${priceExtras.toFixed(2)}€</p>`;
 		}
 	},
+
+	filters: {
+		name: function (item) {
+			if (item == 'xlarge') {
+				return "Extra large";
+			} else {
+				return item.charAt(0).toUpperCase() + item.substring(1, item.length);
+			}
+		}
+	},
+
+	methods: {
+		turnOn: function () {
+			if (this.status === true) {
+				return this.status = false;
+			} else {
+				return this.status = true;
+			}
+		}
+	}
 })
