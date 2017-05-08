@@ -1,7 +1,7 @@
 let app = new Vue({
 	el: "#app",
 	data: {
-		status: false,
+		status: true,
 		coffee: {
 			type: "",
 			size: "",
@@ -10,7 +10,28 @@ let app = new Vue({
 			detailSize: 0,
 			detailExtra: 0,
 		},
-
+		menu: {
+			"size": {
+				"small": 1.50,
+				"medium": 1.70,
+				"large": 1.90,
+				"xlarge": 2.10
+			},
+			"extras": {
+				"milk": [
+					0.05,
+					0.10
+				],
+				"cream": [
+					0.15,
+					0.20
+				],
+				"both": [
+					0.10,
+					0.15
+				]
+			}
+		},
 		order: [],
 		paid: [],
 	},
@@ -21,38 +42,38 @@ let app = new Vue({
 			let extras = this.coffee.extras;
 
 			if (size === "small") {
-				this.coffee.detailSize = 1.5;
+				this.coffee.detailSize = this.menu.size.small;
 			} else if (size === "medium") {
-				this.coffee.detailSize = 1.7;
+				this.coffee.detailSize = this.menu.size.medium;
 			} else if (size === "large") {
-				this.coffee.detailSize = 1.9;
+				this.coffee.detailSize = this.menu.size.large;
 			} else if (size === "xlarge") {
-				this.coffee.detailSize = 2.1;
+				this.coffee.detailSize = this.menu.size.xlarge;
 			}
 
 
 			if (extras === "milk") {
 
 				if (size != "xlarge") {
-					this.coffee.detailExtra = 0.05;
+					this.coffee.detailExtra = this.menu.extras.milk[0];
 				} else {
-					this.coffee.detailExtra = 0.1;
+					this.coffee.detailExtra = this.menu.extras.milk[1];
 				}
 
 			} else if (extras === "cream") {
 
 				if (size != "xlarge") {
-					this.coffee.detailExtra = 0.15;
+					this.coffee.detailExtra = this.menu.extras.cream[0];
 				} else {
-					this.coffee.detailExtra = 0.2;
+					this.coffee.detailExtra = this.menu.extras.cream[1];
 				}
 
 			} else if (extras === "both") {
 
 				if (size != "xlarge") {
-					this.coffee.detailExtra = 0.1;
+					this.coffee.detailExtra = this.menu.extras.both[0];
 				} else {
-					this.coffee.detailExtra = 0.15;
+					this.coffee.detailExtra = this.menu.extras.milk[1];
 				}
 
 			}
