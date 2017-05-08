@@ -22,7 +22,7 @@ let app = new Vue({
 
 			if (size === "small") {
 				this.coffee.detailSize = 1.5;
-			} else if (size === "mediumsz") {
+			} else if (size === "medium") {
 				this.coffee.detailSize = 1.7;
 			} else if (size === "large") {
 				this.coffee.detailSize = 1.9;
