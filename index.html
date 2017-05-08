@@ -90,7 +90,7 @@
 					<div id="sold" v-if="paid.length != 0">
 						<p class="subt">History</p>
 						<div v-for="item in paid">
-							<p>{{item.type}}, {{item.size}}, {{item.extras}}: {{item.price}}€</p>
+							<p>{{item.type|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
 						</div>
 						<p class="subt">Total: {{totalPaid}} €</p>
 					</div>
