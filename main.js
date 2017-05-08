@@ -72,7 +72,7 @@ let app = new Vue({
 			for (item of this.paid) {
 				final += parseFloat(item.price);
 			}
-			return final;
+			return final.toFixed(2);
 		}
 	},
 
