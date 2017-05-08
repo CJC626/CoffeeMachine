@@ -6,7 +6,10 @@ let app = new Vue({
 			type: "",
 			size: "",
 			extras: "",
-		}
+			price: ""
+		},
+		order: [],
+		paid: [],
 	},
 
 	computed: {
@@ -55,13 +58,21 @@ let app = new Vue({
 			console.log("precio tamaño: " + priceCoffee);
 			console.log("precio extras: " + priceExtras);
 			let final = (priceCoffee + priceExtras).toFixed(2);
-
+			this.coffee.price = final;
 
 			//ECMA6 template literals not working here. Used v-HTML to embed the result.
 			return `<p><span class="subt">Price:</span> ${final}€</p>
 			<p><span class="subt" style="text-decoration: underline;">Detail:</span></p>
 	  	<p><span class="subt">Coffee:</span> ${priceCoffee.toFixed(2)}€</p>
 	  	<p><span class="subt">Extras:</span> ${priceExtras.toFixed(2)}€</p>`;
+		},
+
+		totalPaid: function () {
+			let final = 0;
+			for (item of this.paid) {
+				final += parseFloat(item.price);
+			}
+			return final;
 		}
 	},
 
@@ -82,6 +93,28 @@ let app = new Vue({
 			} else {
 				return this.status = true;
 			}
+		},
+
+		newOrder: function () {
+			this.order.push(this.coffee);
+			this.coffee = coffee = {
+				type: "",
+				size: "",
+				extras: "",
+			}
+		},
+
+		cancelOrder: function (item) {
+			let position = this.order.indexOf(coffee);
+			this.order.splice(position, 1);
+		},
+
+		payOrder: function () {
+			for (item of this.order) {
+				this.paid.push(item);
+			}
+			this.order = [];
 		}
+
 	}
 })

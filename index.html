@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -53,20 +54,49 @@
 				</div>
 			</div>
 
-			<div class="col-xs-4">
+			<div class="col-xs-3">
 				<div class="row">
 					<p><span class="subt">Your selection:</span> {{coffee.type |name}} </p>
 					<p><span class="subt">Size:</span> {{coffee.size |name}}</p>
 					<p><span class="subt">Extras:</span> {{coffee.extras |name}}</p>
+					<button type="button" v-on:click="newOrder" class="btn btn-warning" :disabled="coffee.extras.length === 0">Add to cart</button>
 				</div>
 			</div>
 
-			<div class="col-xs-2">
+			<div class="col-xs-2" id="recap">
 				<div class="row">
 					<div v-if="coffee.extras.length !=0" v-html="price"></div>
 				</div>
 			</div>
 
+
+			<div class="col-xs-3">
+				<div class="row">
+					<p class="subt">Basket</p>
+
+					<div v-if="order.length === 0">
+						<p>Your basket is currently empty</p>
+					</div>
+
+					<div v-if="order.length != 0">
+						<div v-for="item in order">
+							<p>{{item.type |name}}, {{item.size |name}}, {{item.extras |name}}: {{item.price}}€
+								<a v-on:click="cancelOrder(item)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+							</p>
+						</div>
+						<button type="button" v-on:click="payOrder()">Proceed to checkout</button>
+					</div>
+
+					<div id="sold" v-if="paid.length != 0">
+						<p class="subt">History</p>
+						<div v-for="item in paid">
+							<p>{{item.type}}, {{item.size}}, {{item.extras}}: {{item.price}}€</p>
+						</div>
+						<p class="subt">Total: {{totalPaid}} €</p>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</div>
 
