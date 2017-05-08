@@ -11,67 +11,58 @@
 </head>
 
 <body>
+	<div id="app">
+		<h3>Coffee maker</h3>
+		<div class="container-fluid">
+			<button type="button" v-on:click="turnOn" v-if="status===true" class="btn-xs btn-warning">Turn Off</button>
+			<button type="button" v-on:click="turnOn" v-if="status===false" class="btn-xs btn-warning">Turn On</button>
 
-	<div class="container" id="app">
+			<div class="row" v-if="status===true">
+				<div class="col-sm-offset-1 col-xs-5">
 
-		<div class="row">
-			<div class="col-sm-offset-1 col-xs-8">
-				<h3>Coffee maker</h3>
-			</div>
-			<div class="col-lg-2 col-xs-4">
-				<button type="button" v-on:click="turnOn" v-if="status===true" style="background-color: white; color: black;">Turn Off</button>
-				<button type="button" v-on:click="turnOn" v-if="status===false" style="background-color: grey;">Turn On</button>
-			</div>
-		</div>
+					<!--Type-->
+					<div class="row">
+						<p class="subt">Choose your roast</p>
+						<span class="sp">	<input type="radio" value="light" v-model="coffee.type" />Light</span>
+						<span class="sp">	<input type="radio" value="medium" v-model="coffee.type" />Medium</span>
+						<span class="sp">	<input type="radio" value="dark" v-model="coffee.type" />Dark</span>
+					</div>
 
-		<div class="row" v-if="status===true">
-			<div class="col-sm-offset-1 col-xs-5">
+					<!--size-->
+					<div v-if="coffee.type.length !=0 " class="row ">
+						<p class="subt">Choose the size</p>
+						<span class="sp"><input type="radio" value="small" v-model="coffee.size" />Small</span>
+						<span class="sp"><input type="radio" value="medium" v-model="coffee.size" />Medium</span>
+						<span class="sp"><input type="radio" value="large" v-model="coffee.size" />Large</span>
+						<span class="sp">	<input type="radio" value="xlarge" v-model="coffee.size" />X-large</span>
+					</div>
 
-				<!--Type-->
-				<div class="row">
-					<p class="subt">Choose your roast</p>
-					<span class="sp">	<input type="radio" value="light" v-model="coffee.type" />Light</span>
-					<span class="sp">	<input type="radio" value="medium" v-model="coffee.type" />Medium</span>
-					<span class="sp">	<input type="radio" value="dark" v-model="coffee.type" />Dark</span>
+					<!--extras-->
+					<div v-if="coffee.size.length !=0" class="row">
+						<p class="subt">Extras:</p>
+						<span class="sp"><input type="radio" value="milk" v-model="coffee.extras" />Milk</span>
+						<span class="sp">	<input type="radio" value="cream" v-model="coffee.extras" />Cream</span>
+						<span class="sp">	<input type="radio" value="both" v-model="coffee.extras" />Both</span>
+						<span class="sp">	<input type="radio" value="No-Extra" v-model="coffee.extras" />Nothing</span>
+					</div>
 				</div>
 
-				<!--size-->
-				<div v-if="coffee.type.length !=0 " class="row ">
-					<p class="subt">Choose the size</p>
-					<span class="sp"><input type="radio" value="small" v-model="coffee.size" />Small</span>
-					<span class="sp"><input type="radio" value="medium" v-model="coffee.size" />Medium</span>
-					<span class="sp"><input type="radio" value="large" v-model="coffee.size" />Large</span>
-					<span class="sp">	<input type="radio" value="xlarge" v-model="coffee.size" />X-large</span>
+				<div class="col-xs-3">
+					<div class="row">
+						<p><span class="subt">Your selection:</span> {{coffee.type |name}} </p>
+						<p><span class="subt">Size:</span> {{coffee.size |name}}</p>
+						<p><span class="subt">Extras:</span> {{coffee.extras |name}}</p>
+						<button type="button" v-on:click="newOrder" class="btn btn-warning" :disabled="coffee.extras.length === 0">Add to cart</button>
+					</div>
 				</div>
 
-				<!--extras-->
-				<div v-if="coffee.size.length !=0" class="row">
-					<p class="subt">Extras:</p>
-					<span class="sp"><input type="radio" value="milk" v-model="coffee.extras" />Milk</span>
-					<span class="sp">	<input type="radio" value="cream" v-model="coffee.extras" />Cream</span>
-					<span class="sp">	<input type="radio" value="both" v-model="coffee.extras" />Both</span>
-					<span class="sp">	<input type="radio" value="NoExtra" v-model="coffee.extras" />Nothing</span>
-				</div>
-			</div>
-
-			<div class="col-xs-3">
-				<div class="row">
-					<p><span class="subt">Your selection:</span> {{coffee.type |name}} </p>
-					<p><span class="subt">Size:</span> {{coffee.size |name}}</p>
-					<p><span class="subt">Extras:</span> {{coffee.extras |name}}</p>
-					<button type="button" v-on:click="newOrder" class="btn btn-warning" :disabled="coffee.extras.length === 0">Add to cart</button>
-				</div>
-			</div>
-
-			<div class="col-xs-2" id="recap">
-				<div class="row">
+				<div class="col-xs-2" id="recap">
 					<div v-if="coffee.extras.length !=0" v-html="price"></div>
 				</div>
-			</div>
 
 
-			<div class="col-xs-3">
-				<div class="row">
+				<div class="col-xs-3">
+
 					<p class="subt">Basket</p>
 
 					<div v-if="order.length === 0">
@@ -84,18 +75,20 @@
 								<a v-on:click="cancelOrder(item)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
 							</p>
 						</div>
-						<button type="button" v-on:click="payOrder()">Proceed to checkout</button>
+						<button type="button" v-on:click="payOrder()" class="btn-xs btn-warning">Proceed to checkout</button>
 					</div>
-
-					<div id="sold" v-if="paid.length != 0">
-						<p class="subt">History</p>
-						<div v-for="item in paid">
-							<p>{{item.type|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
-						</div>
-						<p class="subt">Total: {{totalPaid}} €</p>
-					</div>
-
 				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-xs-3 col-xs-offset-5" id="sold" v-if="paid.length != 0">
+				<p class="subt">History</p>
+				<div v-for="item in paid">
+					<p>{{item.type|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
+				</div>
+				<p class="subt">Total: {{totalPaid}} €</p>
 			</div>
 		</div>
 	</div>

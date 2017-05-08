@@ -1,7 +1,6 @@
-.container{
+.container-fluid{
 background-color: #f99954;
-min-height: 75vh;
-width: 75vw;
+min-height: 50vh;
 margin-top: 10vh;
 font-family: 'Arial';
 }
@@ -24,13 +23,25 @@ button{
 }
 
 p, h3, li{
-  color:  white;
+  color: #333;
+}
+
+h3{
+  text-align: center;
 }
 
 #recap{
   height: 150px;
 }
 
+#sold{
+  background-color: lightgoldenrodyellow;
+}
+
+i{
+  color: brown;
+  cursor: pointer;
+}
 
 
 @media (max-width: 700px) {
