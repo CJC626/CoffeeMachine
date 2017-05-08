@@ -48,27 +48,18 @@
 				</div>
 
 				<div class="col-xs-3">
-					<div class="row">
-						<p><span class="subt">Your selection:</span> {{coffee.type |name}} </p>
-						<p><span class="subt">Size:</span> {{coffee.size |name}}</p>
-						<p><span class="subt">Extras:</span> {{coffee.extras |name}}</p>
-						<button type="button" v-on:click="newOrder" class="btn btn-warning" :disabled="coffee.extras.length === 0">Add to cart</button>
-					</div>
+					<p><span class="subt">Your selection:</span> {{coffee.type |name}} </p>
+					<p><span class="subt">Size:</span> {{coffee.size |name}}</p>
+					<p><span class="subt">Extras:</span> {{coffee.extras |name}}</p>
+					<div v-if="coffee.extras.length !=0" v-html="price"></div>
+					<button type="button" v-on:click="newOrder" class="btn btn-warning" :disabled="coffee.extras.length === 0">Add to cart</button>
 				</div>
 
 				<div class="col-xs-2" id="recap">
-					<div v-if="coffee.extras.length !=0" v-html="price"></div>
-				</div>
-
-
-				<div class="col-xs-3">
-
 					<p class="subt">Basket</p>
-
 					<div v-if="order.length === 0">
 						<p>Your basket is currently empty</p>
 					</div>
-
 					<div v-if="order.length != 0">
 						<div v-for="item in order">
 							<p>{{item.type |name}}, {{item.size |name}}, {{item.extras |name}}: {{item.price}}€
@@ -79,18 +70,17 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
-
-
-		<div class="row">
-			<div class="col-xs-3 col-xs-offset-5" id="sold" v-if="paid.length != 0">
-				<p class="subt">History</p>
-				<div v-for="item in paid">
-					<p>{{item.type|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
-				</div>
-				<p class="subt">Total: {{totalPaid}} €</p>
+		<div class="col-xs-3 col-xs-offset-5" id="sold" v-if="paid.length != 0">
+			<p class="subt">History</p>
+			<div v-for="item in paid">
+				<p>{{item.type|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
 			</div>
+			<p class="subt">Total: {{totalPaid}} €</p>
 		</div>
+	</div>
+	</div>
 	</div>
 
 	<script src="https://unpkg.com/vue@2.2.6"></script>

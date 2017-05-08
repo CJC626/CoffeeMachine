@@ -6,65 +6,65 @@ let app = new Vue({
 			type: "",
 			size: "",
 			extras: "",
-			price: ""
+			price: 0,
+			detailSize: 0,
+			detailExtra: 0,
 		},
+
 		order: [],
 		paid: [],
 	},
 
 	computed: {
 		price: function () {
-			let priceCoffee = 0;
-			let priceExtras = 0;
 			let size = this.coffee.size;
 			let extras = this.coffee.extras;
 
 			if (size === "small") {
-				priceCoffee = 1.5;
-			} else if (size === "medium") {
-				priceCoffee = 1.7;
+				this.coffee.detailSize = 1.5;
+			} else if (size === "mediumsz") {
+				this.coffee.detailSize = 1.7;
 			} else if (size === "large") {
-				priceCoffee = 1.9;
+				this.coffee.detailSize = 1.9;
 			} else if (size === "xlarge") {
-				priceCoffee = 2.1;
+				this.coffee.detailSize = 2.1;
 			}
 
 
 			if (extras === "milk") {
 
 				if (size != "xlarge") {
-					priceExtras = 0.05;
+					this.coffee.detailExtra = 0.05;
 				} else {
-					priceExtras = 0.1;
+					this.coffee.detailExtra = 0.1;
 				}
 
 			} else if (extras === "cream") {
 
 				if (size != "xlarge") {
-					priceExtras = 0.15;
+					this.coffee.detailExtra = 0.15;
 				} else {
-					priceExtras = 0.2;
+					this.coffee.detailExtra = 0.2;
 				}
 
 			} else if (extras === "both") {
 
 				if (size != "xlarge") {
-					priceExtras = 0.1;
+					this.coffee.detailExtra = 0.1;
 				} else {
-					priceExtras = 0.15;
+					this.coffee.detailExtra = 0.15;
 				}
 
 			}
-			console.log("precio tamaño: " + priceCoffee);
-			console.log("precio extras: " + priceExtras);
-			let final = (priceCoffee + priceExtras).toFixed(2);
+			console.log("precio tamaño: " + this.coffee.detailSize);
+			console.log("precio extras: " + this.coffee.detailExtra);
+			let final = (this.coffee.detailSize + this.coffee.detailExtra).toFixed(2);
 			this.coffee.price = final;
 
 			//ECMA6 template literals not working here. Used v-HTML to embed the result.
 			return `<p><span class="subt">Price:</span> ${final}€</p>
 			<p><span class="subt" style="text-decoration: underline;">Detail:</span></p>
-	  	<p><span class="subt">Coffee:</span> ${priceCoffee.toFixed(2)}€</p>
-	  	<p><span class="subt">Extras:</span> ${priceExtras.toFixed(2)}€</p>`;
+	  	<span class="subt">Coffee:</span> ${this.coffee.detailSize.toFixed(2)}€ <span class="subt">Extras:</span> ${this.coffee.detailExtra.toFixed(2)}€`;
 		},
 
 		totalPaid: function () {
@@ -82,6 +82,26 @@ let app = new Vue({
 				return "Extra large";
 			} else {
 				return item.charAt(0).toUpperCase() + item.substring(1, item.length);
+			}
+		},
+
+		showPrice: function (item) {
+			switch (item) {
+				case "small":
+					return `Small: 1.50€`;
+					break;
+
+				case "mediumsz":
+					return `Medium: 1.70€`;
+					break;
+
+				case "large":
+					return `Large: 1.90€`;
+					break;
+
+				case "xlarge":
+					return `Extra Large: 2.10€`;
+					break;
 			}
 		}
 	},
