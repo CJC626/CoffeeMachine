@@ -1,0 +1,15 @@
+.container{
+background-color: #f99954;
+color:  white;
+height: 60vh;
+margin-top: 20vh;
+font-family: 'Arial';
+}
+
+.row{
+	padding-top: 30px;
+}
+
+.sp{
+	padding-right: 10px;
+}
