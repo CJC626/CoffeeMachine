@@ -59,7 +59,7 @@ let app = new Vue({
 
 			//ECMA6 template literals not working here. Used v-HTML to embed the result.
 			return `<p><span class="subt">Price:</span> ${final}€</p>
-			<p><span class="subt">Detail:</span></p>
+			<p><span class="subt" style="text-decoration: underline;">Detail:</span></p>
 	  	<p><span class="subt">Coffee:</span> ${priceCoffee.toFixed(2)}€</p>
 	  	<p><span class="subt">Extras:</span> ${priceExtras.toFixed(2)}€</p>`;
 		}
