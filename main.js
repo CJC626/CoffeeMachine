@@ -1,20 +1,62 @@
 let app = new Vue({
 	el: "#app",
-	data: jsonData,
+	data: {
+		status: true,
+		coffee: {
+			type: "",
+			size: "",
+			extras: "",
+			price: 0,
+			detailSize: 0,
+			detailExtra: 0,
+		},
+		menu: {
+			"size": {
+				"small": 1.50,
+				"medium": 1.70,
+				"large": 1.90,
+				"xlarge": 2.10
+			},
+			"extras": {
+				"milk": [
+					0.05,
+					0.10
+				],
+				"cream": [
+					0.15,
+					0.20
+				],
+				"both": [
+					0.10,
+					0.15
+				]
+			}
+		},
+		order: [],
+		paid: [],
+	},
 
 	computed: {
 		price: function () {
 			let size = this.coffee.size;
 			let extras = this.coffee.extras;
 
-			if (size === "small") {
-				this.coffee.detailSize = this.menu.size.small;
-			} else if (size === "medium") {
-				this.coffee.detailSize = this.menu.size.medium;
-			} else if (size === "large") {
-				this.coffee.detailSize = this.menu.size.large;
-			} else if (size === "xlarge") {
-				this.coffee.detailSize = this.menu.size.xlarge;
+			switch (size) {
+				case "small":
+					this.coffee.detailSize = this.menu.size.small;
+					break;
+
+				case "medium":
+					this.coffee.detailSize = this.menu.size.medium;
+					break;
+
+				case "large":
+					this.coffee.detailSize = this.menu.size.large;
+					break;
+
+				case "xlarge":
+					this.coffee.detailSize = this.menu.size.xlarge;
+					break;
 			}
 
 
@@ -71,8 +113,8 @@ let app = new Vue({
 		},
 
 		withCents: function (price) {
-			return price.toFixed(2);
-		},
+			return price.toFixed(2)
+		}
 	},
 
 	methods: {
