@@ -1,0 +1,13 @@
+{
+	"name" : "manzanabel-coffee-machine",
+	"private" : "true",
+	"version" : "0.0.0",
+	"description" : "A little coffee machine Anabel and I are making.",
+	"devDependencies" : {
+		"http-server" : "^0.9.0"
+	},
+	"scripts" : {
+		"prestart" : "npm install",
+		"start" : "http-server . -a localhost -p 8626 -c-1"
+	}
+}
