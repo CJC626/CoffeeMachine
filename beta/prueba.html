@@ -113,8 +113,8 @@
 
 										<div v-if="coffee.extras.length !=0" id="recap">
 											<p>Price: {{price}}€</p>
-											<p>Selected size: {{coffee.detailSize}}€</p>
-											<p>Selected extras: {{coffee.detailExtra}}€</p>
+											<p>Selected size: {{coffee.detailSize|withCents}}€</p>
+											<p>Selected extras: {{coffee.detailExtra|withCents}}€</p>
 										</div>
 									</div>
 									<div class="card-action">

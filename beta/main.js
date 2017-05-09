@@ -41,14 +41,22 @@ let app = new Vue({
 			let size = this.coffee.size;
 			let extras = this.coffee.extras;
 
-			if (size === "small") {
-				this.coffee.detailSize = this.menu.size.small;
-			} else if (size === "medium") {
-				this.coffee.detailSize = this.menu.size.medium;
-			} else if (size === "large") {
-				this.coffee.detailSize = this.menu.size.large;
-			} else if (size === "xlarge") {
-				this.coffee.detailSize = this.menu.size.xlarge;
+			switch (size) {
+				case "small":
+					this.coffee.detailSize = this.menu.size.small;
+					break;
+
+				case "medium":
+					this.coffee.detailSize = this.menu.size.medium;
+					break;
+
+				case "large":
+					this.coffee.detailSize = this.menu.size.large;
+					break;
+
+				case "xlarge":
+					this.coffee.detailSize = this.menu.size.xlarge;
+					break;
 			}
 
 
@@ -104,9 +112,9 @@ let app = new Vue({
 			}
 		},
 
-		// withCents: function (price) {
-		// 	price += 100;
-		// },
+		withCents: function (price) {
+			return price.toFixed(2)
+		}
 	},
 
 	methods: {
