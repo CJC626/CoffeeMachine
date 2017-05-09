@@ -70,9 +70,9 @@ let app = new Vue({
 			}
 		},
 
-		// withCents: function (price) {
-		// 	price += 100;
-		// },
+		withCents: function (price) {
+			return price.toFixed(2);
+		},
 	},
 
 	methods: {
