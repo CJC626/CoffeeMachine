@@ -71,8 +71,8 @@ let app = new Vue({
 		},
 
 		withCents: function (price) {
-		 	return price.toFixed(2);
-		}//,
+			return price.toFixed(2);
+		},
 	},
 
 	methods: {
