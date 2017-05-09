@@ -13,6 +13,25 @@
 <body>
 	<div id="app">
 		<h3>Coffee maker</h3>
+
+		<!--WIP ACA!!!-->
+		<div class="container" id="menu">
+			<div class="row">
+				<div class="col-xs-6">
+					<ul v-for="(value, key) in menu.size">
+						<li>{{ key |name }} : {{ value }}€</li>
+					</ul>
+				</div>
+
+				<div class="col-xs-6">
+					<ul v-for="(value, key) in menu.extras">
+						<li>{{ key |name }} (Small, Medium, Large) : {{ value[0] }}€</li>
+						<li> {{ key |name }} (Extra-Large) : {{ value[1] }}€
+				</div>
+			</div>
+		</div>
+
+
 		<div class="container-fluid">
 			<!--<button type="button" v-on:click="turnOn" v-if="status===true" class="btn-xs btn-warning">Turn Off</button>
 			<button type="button" v-on:click="turnOn" v-if="status===false" class="btn-xs btn-warning">Turn On</button>-->
@@ -79,8 +98,6 @@
 			</div>
 			<p class="subt">Total: {{totalPaid}} €</p>
 		</div>
-	</div>
-	</div>
 	</div>
 
 	<script src="https://unpkg.com/vue@2.2.6"></script>

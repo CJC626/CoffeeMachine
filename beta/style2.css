@@ -1,0 +1,18 @@
+.card-content{
+	min-height: 250px;
+}
+
+.card-action{
+	min-height: 70px;
+	text-align: center;
+}
+
+#recap{
+	margin-top: 2em;
+	background-color: #bdbdbd;
+	width: 160px;
+}
+
+.selected{
+	opacity: 0.5;
+}
