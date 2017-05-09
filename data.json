@@ -1,14 +1,14 @@
-var jsonData = {
-		status: true,
-		coffee: {
-			type: "",
-			size: "",
-			extras: "",
-			price: 0,
-			detailSize: 0,
-			detailExtra: 0,
+let jsonData = {
+		"status": true,
+		"coffee": {
+			"type": "",
+			"size": "",
+			"extras": "",
+			"price": 0,
+			"detailSize": 0,
+			"detailExtra": 0,
 		},
-		menu: {
+		"menu": {
 			"size": {
 				"small": 1.50,
 				"medium": 1.70,
@@ -30,6 +30,6 @@ var jsonData = {
 				]
 			}
 		},
-		order: [],
-		paid: [],
+		"order": [],
+		"paid": [],
 	};
