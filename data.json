@@ -1,4 +1,4 @@
-let jsonData = {
+let coffeeMachineData = {
 		"status": true,
 		"coffee": {
 			"type": "",

@@ -1,6 +1,6 @@
 let app = new Vue({
 	el: "#app",
-	data: jsonData,
+	data: coffeeMachineData,
 
 	computed: {
 		price: function () {
