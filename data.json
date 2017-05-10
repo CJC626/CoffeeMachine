@@ -6,7 +6,7 @@ let coffeeMachineData = {
 			"extras": "",
 			"price": 0,
 			"detailSize": 0,
-			"detailExtra": 0
+			"detailExtra": 0,
 		},
 		"menu": {
 			"size": {
@@ -31,5 +31,5 @@ let coffeeMachineData = {
 			}
 		},
 		"order": [],
-		"paid": []
-};
+		"paid": [],
+	};

@@ -5,9 +5,8 @@
 	<title>Coffee Machine</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
-	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 	<link rel="stylesheet" href="style.css">
 
 </head>
@@ -26,70 +25,70 @@
 					<!-- Grey navigation panel -->
 
 					<!--Type-->
-					<div id="roast" :class="{selected:offering.coffee.roast.length !=0}">
+					<div id="roast" :class="{selected:coffee.type.length !=0}">
 						<p>Choose your roast:</p>
 						<p>
-							<input type="radio" id="light" value="light" v-model="offering.coffee.roast" />
+							<input type="radio" id="light" value="light" v-model="coffee.type" />
 							<label for="light">Light</label>
 						</p>
 
 						<p>
-							<input type="radio" id="medium" value="medium" v-model="offering.coffee.roast" />
+							<input type="radio" id="medium" value="medium" v-model="coffee.type" />
 							<label for="medium">Medium</label>
 						</p>
 
 						<p>
-							<input type="radio" id="dark" value="dark" v-model="offering.coffee.roast" />
+							<input type="radio" id="dark" value="dark" v-model="coffee.type" />
 							<label for="dark">Dark</label>
 						</p>
 					</div>
 
 					<!--size-->
-					<div id="size" v-if="offering.coffee.roast.length !=0" :class="{selected:offering.coffee.size.length !=0}">
+					<div id="size" v-if="coffee.type.length !=0" :class="{selected:coffee.size.length !=0}">
 						<p>Choose the size:</p>
 
 						<p>
-							<input type="radio" id="small" value="small" v-model="offering.coffee.size" />
+							<input type="radio" id="small" value="small" v-model="coffee.size" />
 							<label for="small">Small</label>
 						</p>
 
 						<p>
-							<input type="radio" id="medium-size" value="medium" v-model="offering.coffee.size" />
+							<input type="radio" id="medium-size" value="medium" v-model="coffee.size" />
 							<label for="medium-size">Medium</label>
 						</p>
 
 						<p>
-							<input type="radio" id="large" value="large" v-model="offering.coffee.size" />
+							<input type="radio" id="large" value="large" v-model="coffee.size" />
 							<label for="large">Large</label>
 						</p>
 
 						<p>
-							<input type="radio" id="xlarge" value="xlarge" v-model="offering.coffee.size" />
+							<input type="radio" id="xlarge" value="xlarge" v-model="coffee.size" />
 							<label for="xlarge">X-Large</label>
 						</p>
 					</div>
 
 					<!--extras-->
-					<div id="extras" v-if="offering.coffee.size.length !=0">
+					<div id="extras" v-if="coffee.size.length !=0">
 						<p>Extras:</p>
 						<p>
-							<input type="radio" id="milk" value="milk" v-model="offering.coffee.extras" />
+							<input type="radio" id="milk" value="milk" v-model="coffee.extras" />
 							<label for="milk">Milk</label>
 						</p>
 
 						<p>
-							<input type="radio" id="cream" value="cream" v-model="offering.coffee.extras" />
+							<input type="radio" id="cream" value="cream" v-model="coffee.extras" />
 							<label for="cream">Cream</label>
 						</p>
 
 
 						<p>
-							<input type="radio" id="both" value="both" v-model="offering.coffee.extras" />
+							<input type="radio" id="both" value="both" v-model="coffee.extras" />
 							<label for="both">Both</label>
 						</p>
 
 						<p>
-							<input type="radio" id="noextra" value="No-Extra" v-model="offering.coffee.extras" />
+							<input type="radio" id="noextra" value="No-Extra" v-model="coffee.extras" />
 							<label for="noextra">No Extras</label>
 						</p>
 
@@ -108,18 +107,18 @@
 								<div class="card blue-grey darken-1">
 									<div class="card-content white-text">
 										<span class="card-title">Your selection</span>
-										<p><span class="subt">Roast:</span> {{offering.coffee.roast |name}} </p>
-										<p><span class="subt">Size:</span> {{offering.coffee.size |name}}</p>
-										<p><span class="subt">Extras:</span> {{offering.coffee.extras |name}}</p>
+										<p><span class="subt">Roast:</span> {{coffee.type |name}} </p>
+										<p><span class="subt">Size:</span> {{coffee.size |name}}</p>
+										<p><span class="subt">Extras:</span> {{coffee.extras |name}}</p>
 
-										<div v-if="offering.coffee.extras.length !=0" id="recap">
+										<div v-if="coffee.extras.length !=0" id="recap">
 											<p>Price: {{price}}€</p>
-											<p>Selected size: {{offering.coffee.detailSize|withCents}}€</p>
-											<p>Selected extras: {{offering.coffee.detailExtra|withCents}}€</p>
+											<p>Selected size: {{coffee.detailSize|withCents}}€</p>
+											<p>Selected extras: {{coffee.detailExtra|withCents}}€</p>
 										</div>
 									</div>
 									<div class="card-action">
-										<button type="button" v-on:click="newOrder" class="btn" :disabled="offering.coffee.extras.length === 0">Add to cart</button>
+										<button type="button" v-on:click="newOrder" class="btn" :disabled="coffee.extras.length === 0">Add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -135,19 +134,19 @@
 								<div class="card blue-grey darken-1">
 									<div class="card-content white-text">
 										<span class="card-title">Basket</span>
-										<div v-if="offering.order.length === 0">
+										<div v-if="order.length === 0">
 											<p>Your basket is currently empty</p>
 										</div>
-										<div v-if="offering.order.length != 0">
-											<div v-for="item in offering.order">
-												<p>{{item.roast |name}}, {{item.size |name}}, {{item.extras |name}}: {{item.price}}€
+										<div v-if="order.length != 0">
+											<div v-for="item in order">
+												<p>{{item.type |name}}, {{item.size |name}}, {{item.extras |name}}: {{item.price}}€
 													<a v-on:click="cancelOrder(item)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
 												</p>
 											</div>
 										</div>
 									</div>
 									<div class="card-action">
-										<button type="button" v-on:click="payOrder()" class="btn" v-if="offering.order.length != 0">Checkout</button>
+										<button type="button" v-on:click="payOrder()" class="btn" v-if="order.length != 0">Checkout</button>
 									</div>
 								</div>
 							</div>
@@ -160,12 +159,12 @@
 					<div class="col s4">
 						<div class="row">
 							<div class="col s12">
-								<div id="sold" v-if="offering.paid.length != 0">
+								<div id="sold" v-if="paid.length != 0">
 									<div class="card blue-grey darken-1">
 										<div class="card-content white-text">
 											<span class="card-title">History</span>
-											<div v-for="item in offering.paid">
-												<p>{{item.roast|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
+											<div v-for="item in paid">
+												<p>{{item.type|name}}, {{item.size|name}}, {{item.extras|name}}: {{item.price}}€</p>
 											</div>
 										</div>
 										<div class="card-action">
@@ -188,10 +187,9 @@
 	</div>
 
 
-	<script src="node_modules/jquery/dist/jquery.min.js"></script>
-	<script src="node_modules/materialize-css/dist/js/materialize.js"></script>
-	<script src="node_modules/vue/dist/vue.js"></script>
-	<script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+	<script src="https://unpkg.com/vue@2.2.6"></script>
+	<script src="data.json" type="text/javascript"></script>
 	<script src="main.js"></script>
 </body>
 
