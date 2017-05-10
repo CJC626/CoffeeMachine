@@ -1,4 +1,4 @@
-let coffeeMachineData = {
+{
 		"status": true,
 		"coffee": {
 			"type": "",
@@ -32,4 +32,4 @@ let coffeeMachineData = {
 		},
 		"order": [],
 		"paid": []
-};
+}

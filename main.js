@@ -9,88 +9,51 @@ console.log("Let's load Vue");
 let app = new Vue({
 	el: "#app",
 	data: function(){
-		var d = {"offering":{
-			"coffee":{
-				"roast": "",
-				"size": "",
-				"extras": "",
-				"price": 0,
-				"detailSize": 0,
-				"detailExtra": 0
-			},
-			"menu":{
-				"size":{},
-				"extras":{
-					"milk":[],
-					"cream":[],
-					"both":[]
-				}
-			},
-			"order":[],
-			"paid":[]
-		}};
-		this.$http.get('coffeeOffering.json').then(function(resp){
-			console.log(resp.body);
-			d.offering = resp.body;
-		});
+		var d = {
+			"machine":{
+				"menu":{"roasts":["light"],"sizes":[],"extras":[]},
+				"chosenCoffee":{
+					"roast":"",
+					"size":"",
+					"extra":"",
+					"detailSize":0.0,
+					"detailExtra":0.0,
+					"price":0.0
+				},
+				"order":[],
+				"paid":[],
+				"status":false
+			}
+		};
 		return d;
+	},
+
+	created: function(){
+		this.$http.get('coffeeMenu.json').then(function(resp){
+			console.log(resp.body);
+			 this.machine = resp.body;
+		});
 	},
 
 	computed: {
 
 		price: function () {
-			let size = this.offering.coffee.size;
-			let extras = this.offering.coffee.extras;
+			let size = this.machine.chosenCoffee.size;
+			let extra = this.machine.chosenCoffee.extra;
 
-			switch (size) {
-				case "small":
-					this.offering.coffee.detailSize = this.offering.menu.size.small;
-					break;
+			this.machine.chosenCoffee.detailSize = this.machine.menu.sizes.find(function(e){
+				return e.name==size;
+			}).price;
 
-				case "medium":
-					this.offering.coffee.detailSize = this.offering.menu.size.medium;
-					break;
-
-				case "large":
-					this.offering.coffee.detailSize = this.offering.menu.size.large;
-					break;
-
-				case "xlarge":
-					this.offering.coffee.detailSize = this.offering.menu.size.xlarge;
-					break;
-			}
+			let matchingSize = this.machine.menu.extras.find(function(e){
+				return e.name==extra;
+			});
+			this.machine.chosenCoffee.detailExtra = size=="xlarge" ? matchingSize.xlPrice : matchingSize.price;
 
 
-			if (extras === "milk") {
-
-				if (size != "xlarge") {
-					console.log(this.offering);
-					this.offering.coffee.detailExtra = this.offering.menu.extras.milk[0];
-				} else {
-					this.offering.coffee.detailExtra = this.offering.menu.extras.milk[1];
-				}
-
-			} else if (extras === "cream") {
-
-				if (size != "xlarge") {
-					this.offering.coffee.detailExtra = this.offering.menu.extras.cream[0];
-				} else {
-					this.offering.coffee.detailExtra = this.offering.menu.extras.cream[1];
-				}
-
-			} else if (extras === "both") {
-
-				if (size != "xlarge") {
-					this.offering.coffee.detailExtra = this.offering.menu.extras.both[0];
-				} else {
-					this.offering.coffee.detailExtra = this.offering.menu.extras.milk[1];
-				}
-
-			}
-			console.log("precio tamaño: " + this.offering.coffee.detailSize);
-			console.log("precio extras: " + this.offering.coffee.detailExtra);
-			let final = (this.offering.coffee.detailSize + this.offering.coffee.detailExtra).toFixed(2);
-			this.offering.coffee.price = final;
+		
+			let final = (this.machine.chosenCoffee.detailSize + this.machine.chosenCoffee.detailExtra).toFixed(2);
+			this.machine.chosenCoffee.price = final;
 
 			//ECMA6 template literals not working here. Used v-HTML to embed the result.
 			return final;
@@ -98,7 +61,8 @@ let app = new Vue({
 
 		totalPaid: function () {
 			let final = 0;
-			for (item of this.offering.paid) {
+			console.log(this);
+			for (item of this.machine.paid) {
 				final += parseFloat(item.price);
 			}
 			return final.toFixed(2);
@@ -108,7 +72,7 @@ let app = new Vue({
 	filters: {
 		name: function (item) {
 			if (item == 'xlarge') {
-				return "Extra large";
+				return "Extra Large";
 			} else {
 				return item.charAt(0).toUpperCase() + item.substring(1, item.length);
 			}
@@ -122,16 +86,16 @@ let app = new Vue({
 	methods: {
 
 		turnOn: function () {
-			if (this.offering.status === true) {
-				return this.offering.status = false;
+			if (this.machine.status === true) {
+				return this.machine.status = false;
 			} else {
-				return this.offering.status = true;
+				return this.machine.status = true;
 			}
 		},
 
 		newOrder: function () {
-			this.offering.order.push(this.offering.coffee);
-			this.offering.coffee = {
+			this.machine.order.push(this.machine.chosenCoffee);
+			this.machine.chosenCoffee = {
 				roast: "",
 				size: "",
 				extras: "",
@@ -142,15 +106,15 @@ let app = new Vue({
 		},
 
 		cancelOrder: function (item) {
-			let position = this.offering.order.indexOf(coffee);
-			this.offering.order.splice(position, 1);
+			let position = this.machine.order.indexOf(item);
+			this.machine.order.splice(position, 1);
 		},
 
 		payOrder: function () {
-			for (item of this.offering.order) {
-				this.offering.paid.push(item);
+			for (item of this.machine.order) {
+				this.machine.paid.push(item);
 			}
-			this.offering.order = [];
+			this.machine.order = [];
 		}
 
 	}
