@@ -1,6 +1,28 @@
 let app = new Vue({
 	el: "#app",
-	data: coffeeMachineData,
+	data: {
+		status: true,
+		coffee: {
+			"type": "",
+			"size": "",
+			"extras": "",
+			"price": 0,
+			"detailSize": 0,
+			"detailExtra": 0
+		},
+		order: [],
+		paid: [],
+		menu: {}
+	},
+
+	created:
+	function () {
+		let url = 'http://localhost:8626/data.json';
+		this.$http.get(url).then(function (reponse) {
+			app.menu = reponse.body;
+			console.log(app.menu.size.small);
+		})
+	},
 
 	computed: {
 		price: function () {
