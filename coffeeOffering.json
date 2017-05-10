@@ -1,7 +1,7 @@
-let coffeeMachineData = {
+{
 		"status": true,
 		"coffee": {
-			"type": "",
+			"roast": "",
 			"size": "",
 			"extras": "",
 			"price": 0,
@@ -32,4 +32,4 @@ let coffeeMachineData = {
 		},
 		"order": [],
 		"paid": []
-};
+}

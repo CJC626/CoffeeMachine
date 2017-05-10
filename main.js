@@ -1,27 +1,62 @@
+
+/**let Vue = require('vue');
+let VueResource = require('vue-resource');
+
+Vue.use(VueResource);*/
+
+console.log("Let's load Vue");
+
 let app = new Vue({
 	el: "#app",
-	data: coffeeMachineData,
+	data: function(){
+		var d = {"offering":{
+			"coffee":{
+				"roast": "",
+				"size": "",
+				"extras": "",
+				"price": 0,
+				"detailSize": 0,
+				"detailExtra": 0
+			},
+			"menu":{
+				"size":{},
+				"extras":{
+					"milk":[],
+					"cream":[],
+					"both":[]
+				}
+			},
+			"order":[],
+			"paid":[]
+		}};
+		this.$http.get('coffeeOffering.json').then(function(resp){
+			console.log(resp.body);
+			d.offering = resp.body;
+		});
+		return d;
+	},
 
 	computed: {
+
 		price: function () {
-			let size = this.coffee.size;
-			let extras = this.coffee.extras;
+			let size = this.offering.coffee.size;
+			let extras = this.offering.coffee.extras;
 
 			switch (size) {
 				case "small":
-					this.coffee.detailSize = this.menu.size.small;
+					this.offering.coffee.detailSize = this.offering.menu.size.small;
 					break;
 
 				case "medium":
-					this.coffee.detailSize = this.menu.size.medium;
+					this.offering.coffee.detailSize = this.offering.menu.size.medium;
 					break;
 
 				case "large":
-					this.coffee.detailSize = this.menu.size.large;
+					this.offering.coffee.detailSize = this.offering.menu.size.large;
 					break;
 
 				case "xlarge":
-					this.coffee.detailSize = this.menu.size.xlarge;
+					this.offering.coffee.detailSize = this.offering.menu.size.xlarge;
 					break;
 			}
 
@@ -29,32 +64,33 @@ let app = new Vue({
 			if (extras === "milk") {
 
 				if (size != "xlarge") {
-					this.coffee.detailExtra = this.menu.extras.milk[0];
+					console.log(this.offering);
+					this.offering.coffee.detailExtra = this.offering.menu.extras.milk[0];
 				} else {
-					this.coffee.detailExtra = this.menu.extras.milk[1];
+					this.offering.coffee.detailExtra = this.offering.menu.extras.milk[1];
 				}
 
 			} else if (extras === "cream") {
 
 				if (size != "xlarge") {
-					this.coffee.detailExtra = this.menu.extras.cream[0];
+					this.offering.coffee.detailExtra = this.offering.menu.extras.cream[0];
 				} else {
-					this.coffee.detailExtra = this.menu.extras.cream[1];
+					this.offering.coffee.detailExtra = this.offering.menu.extras.cream[1];
 				}
 
 			} else if (extras === "both") {
 
 				if (size != "xlarge") {
-					this.coffee.detailExtra = this.menu.extras.both[0];
+					this.offering.coffee.detailExtra = this.offering.menu.extras.both[0];
 				} else {
-					this.coffee.detailExtra = this.menu.extras.milk[1];
+					this.offering.coffee.detailExtra = this.offering.menu.extras.milk[1];
 				}
 
 			}
-			console.log("precio tamaño: " + this.coffee.detailSize);
-			console.log("precio extras: " + this.coffee.detailExtra);
-			let final = (this.coffee.detailSize + this.coffee.detailExtra).toFixed(2);
-			this.coffee.price = final;
+			console.log("precio tamaño: " + this.offering.coffee.detailSize);
+			console.log("precio extras: " + this.offering.coffee.detailExtra);
+			let final = (this.offering.coffee.detailSize + this.offering.coffee.detailExtra).toFixed(2);
+			this.offering.coffee.price = final;
 
 			//ECMA6 template literals not working here. Used v-HTML to embed the result.
 			return final;
@@ -62,7 +98,7 @@ let app = new Vue({
 
 		totalPaid: function () {
 			let final = 0;
-			for (item of this.paid) {
+			for (item of this.offering.paid) {
 				final += parseFloat(item.price);
 			}
 			return final.toFixed(2);
@@ -84,34 +120,38 @@ let app = new Vue({
 	},
 
 	methods: {
+
 		turnOn: function () {
-			if (this.status === true) {
-				return this.status = false;
+			if (this.offering.status === true) {
+				return this.offering.status = false;
 			} else {
-				return this.status = true;
+				return this.offering.status = true;
 			}
 		},
 
 		newOrder: function () {
-			this.order.push(this.coffee);
-			this.coffee = coffee = {
-				type: "",
+			this.offering.order.push(this.offering.coffee);
+			this.offering.coffee = {
+				roast: "",
 				size: "",
 				extras: "",
+				price: 0.0,
+				detailSize: 0.0,
+				detailExtra: 0.0
 			}
 		},
 
 		cancelOrder: function (item) {
-			let position = this.order.indexOf(coffee);
-			this.order.splice(position, 1);
+			let position = this.offering.order.indexOf(coffee);
+			this.offering.order.splice(position, 1);
 		},
 
 		payOrder: function () {
-			for (item of this.order) {
-				this.paid.push(item);
+			for (item of this.offering.order) {
+				this.offering.paid.push(item);
 			}
-			this.order = [];
+			this.offering.order = [];
 		}
 
 	}
-})
+});
