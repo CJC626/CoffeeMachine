@@ -21,3 +21,29 @@ i{
   color: brown;
   cursor: pointer;
 }
+
+.cm-nav{
+	background-color: tan;
+	width:100%;
+	text-align:center;
+	position:relative;
+}
+
+.cm-nav-wrapper{
+	left:-5%;
+}
+
+.cm-opt-unselected{
+	color:darkolivegreen;
+}
+
+.cm-opt-selected{
+	color: #9e9e9e;
+}
+
+.cm-menu-row{
+	background:skyblue;
+	margin-top: 2rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
+}

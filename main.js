@@ -12,7 +12,10 @@ let app = new Vue({
 		},
 		order: [],
 		paid: [],
-		menu: {}
+		menu: {},
+		lblRoast: 'cm-opt-unselected',
+		lblSize: 'cm-opt-unselected',
+		lblExtra: 'cm-opt-unselected'
 	},
 
 	created:
@@ -88,6 +91,18 @@ let app = new Vue({
 				final += parseFloat(item.price);
 			}
 			return final.toFixed(2);
+		},
+
+		roastSelected: function(){
+			return this.coffee.type.length > 0 ? "cm-opt-selected" : "cm-opt-unselected";
+		},
+
+		sizeSelected: function(){
+			return this.coffee.size.length > 0 ? "cm-opt-selected" : "cm-opt-unselected";
+		},
+
+		extraSelected: function(){
+			return this.coffee.extras.length > 0 ? "cm-opt-selected" : "cm-opt-unselected";
 		}
 	},
 
